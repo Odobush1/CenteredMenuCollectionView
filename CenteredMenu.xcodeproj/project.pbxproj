@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50EDAE8D950A48F02FD1C005 /* Pods_CenteredMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE78DB68932A1F45D32D6D36 /* Pods_CenteredMenu.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8BB1F88AF8EBC9125BA53D6B /* Pods_CenteredMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394DF1EBB463BD927FDED2B9 /* Pods_CenteredMenu.framework */; };
+		B10B10911E50EA6900374695 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10B10901E50EA6900374695 /* Constants.swift */; };
 		FA199EB21C54E5C600F334CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA199EB11C54E5C600F334CB /* AppDelegate.swift */; };
 		FA199EB71C54E5C600F334CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA199EB51C54E5C600F334CB /* Main.storyboard */; };
 		FA199EB91C54E5C600F334CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA199EB81C54E5C600F334CB /* Assets.xcassets */; };
@@ -17,12 +18,14 @@
 		FA8D9BA61C55FF8000813C9B /* UICollectionViewCell+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9BA51C55FF8000813C9B /* UICollectionViewCell+Animations.swift */; };
 		FA8D9BAA1C55FF9F00813C9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9BA81C55FF9F00813C9B /* HomeViewController.swift */; };
 		FA8D9BAB1C55FF9F00813C9B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9BA91C55FF9F00813C9B /* MenuViewController.swift */; };
-		FA8D9BAE1C55FFC500813C9B /* InfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9BAD1C55FFC500813C9B /* InfoObject.swift */; };
+		FA8D9BAE1C55FFC500813C9B /* ViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9BAD1C55FFC500813C9B /* ViewData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		914B22462C0BF44B40006AF0 /* Pods-CenteredMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CenteredMenu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CenteredMenu/Pods-CenteredMenu.debug.xcconfig"; sourceTree = "<group>"; };
-		CE78DB68932A1F45D32D6D36 /* Pods_CenteredMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CenteredMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		394DF1EBB463BD927FDED2B9 /* Pods_CenteredMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CenteredMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEF27BD69FD10F742C83E4C4 /* Pods-CenteredMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CenteredMenu.release.xcconfig"; path = "Pods/Target Support Files/Pods-CenteredMenu/Pods-CenteredMenu.release.xcconfig"; sourceTree = "<group>"; };
+		B10B10901E50EA6900374695 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F1766D067D7107E47A060A06 /* Pods-CenteredMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CenteredMenu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CenteredMenu/Pods-CenteredMenu.debug.xcconfig"; sourceTree = "<group>"; };
 		FA199EAE1C54E5C600F334CB /* CenteredMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CenteredMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA199EB11C54E5C600F334CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA199EB61C54E5C600F334CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -34,8 +37,7 @@
 		FA8D9BA51C55FF8000813C9B /* UICollectionViewCell+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UICollectionViewCell+Animations.swift"; path = "Categories/UICollectionViewCell+Animations.swift"; sourceTree = "<group>"; };
 		FA8D9BA81C55FF9F00813C9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Controller/HomeViewController.swift; sourceTree = "<group>"; };
 		FA8D9BA91C55FF9F00813C9B /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = Controller/MenuViewController.swift; sourceTree = "<group>"; };
-		FA8D9BAD1C55FFC500813C9B /* InfoObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoObject.swift; path = Model/InfoObject.swift; sourceTree = "<group>"; };
-		FF8B1DB0BDF4F86506272D57 /* Pods-CenteredMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CenteredMenu.release.xcconfig"; path = "Pods/Target Support Files/Pods-CenteredMenu/Pods-CenteredMenu.release.xcconfig"; sourceTree = "<group>"; };
+		FA8D9BAD1C55FFC500813C9B /* ViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewData.swift; path = Model/ViewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,26 +45,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50EDAE8D950A48F02FD1C005 /* Pods_CenteredMenu.framework in Frameworks */,
+				8BB1F88AF8EBC9125BA53D6B /* Pods_CenteredMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8FB51E3FCA74978ECECF824D /* Pods */ = {
+		72097472B5AD21A51C0970A3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				914B22462C0BF44B40006AF0 /* Pods-CenteredMenu.debug.xcconfig */,
-				FF8B1DB0BDF4F86506272D57 /* Pods-CenteredMenu.release.xcconfig */,
+				F1766D067D7107E47A060A06 /* Pods-CenteredMenu.debug.xcconfig */,
+				AEF27BD69FD10F742C83E4C4 /* Pods-CenteredMenu.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		BA76DE162CEC0C9D2F405AFD /* Frameworks */ = {
+		9C1BD318BF9DCC82BFCC01CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE78DB68932A1F45D32D6D36 /* Pods_CenteredMenu.framework */,
+				394DF1EBB463BD927FDED2B9 /* Pods_CenteredMenu.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -72,8 +74,8 @@
 			children = (
 				FA199EB01C54E5C600F334CB /* CenteredMenu */,
 				FA199EAF1C54E5C600F334CB /* Products */,
-				8FB51E3FCA74978ECECF824D /* Pods */,
-				BA76DE162CEC0C9D2F405AFD /* Frameworks */,
+				72097472B5AD21A51C0970A3 /* Pods */,
+				9C1BD318BF9DCC82BFCC01CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,7 +132,8 @@
 		FA8D9BAF1C55FFCA00813C9B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FA8D9BAD1C55FFC500813C9B /* InfoObject.swift */,
+				FA8D9BAD1C55FFC500813C9B /* ViewData.swift */,
+				B10B10901E50EA6900374695 /* Constants.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -142,12 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA199EC01C54E5C600F334CB /* Build configuration list for PBXNativeTarget "CenteredMenu" */;
 			buildPhases = (
-				536F4F6F578A6CA9A28CA354 /* Check Pods Manifest.lock */,
+				22C615924AF0853E9AEDF45C /* [CP] Check Pods Manifest.lock */,
 				FA199EAA1C54E5C600F334CB /* Sources */,
 				FA199EAB1C54E5C600F334CB /* Frameworks */,
 				FA199EAC1C54E5C600F334CB /* Resources */,
-				9BD4884B56CE6C197DFADA06 /* Embed Pods Frameworks */,
-				468835C8E530DF8173E44D22 /* Copy Pods Resources */,
+				67C88833230369E79512C2A2 /* [CP] Embed Pods Frameworks */,
+				34C3013B55340D5D2279F8C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -171,6 +174,7 @@
 					FA199EAD1C54E5C600F334CB = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = CZG9U6L9P2;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -207,14 +211,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		468835C8E530DF8173E44D22 /* Copy Pods Resources */ = {
+		22C615924AF0853E9AEDF45C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		34C3013B55340D5D2279F8C6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,29 +241,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CenteredMenu/Pods-CenteredMenu-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		536F4F6F578A6CA9A28CA354 /* Check Pods Manifest.lock */ = {
+		67C88833230369E79512C2A2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9BD4884B56CE6C197DFADA06 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,10 +263,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8D9BAE1C55FFC500813C9B /* InfoObject.swift in Sources */,
+				FA8D9BAE1C55FFC500813C9B /* ViewData.swift in Sources */,
 				FA8D9BA61C55FF8000813C9B /* UICollectionViewCell+Animations.swift in Sources */,
 				FA8D9BAB1C55FF9F00813C9B /* MenuViewController.swift in Sources */,
 				FA199EB21C54E5C600F334CB /* AppDelegate.swift in Sources */,
+				B10B10911E50EA6900374695 /* Constants.swift in Sources */,
 				FA199EC51C54E65B00F334CB /* MenuCollectionViewCell.swift in Sources */,
 				FA8D9BAA1C55FF9F00813C9B /* HomeViewController.swift in Sources */,
 			);
@@ -373,7 +378,7 @@
 		};
 		FA199EC11C54E5C600F334CB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 914B22462C0BF44B40006AF0 /* Pods-CenteredMenu.debug.xcconfig */;
+			baseConfigurationReference = F1766D067D7107E47A060A06 /* Pods-CenteredMenu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -381,12 +386,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = odobush.CenteredMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		FA199EC21C54E5C600F334CB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF8B1DB0BDF4F86506272D57 /* Pods-CenteredMenu.release.xcconfig */;
+			baseConfigurationReference = AEF27BD69FD10F742C83E4C4 /* Pods-CenteredMenu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -394,6 +400,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = odobush.CenteredMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

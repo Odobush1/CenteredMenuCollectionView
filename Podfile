@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'CenteredMenu' do
 
-pod 'SDWebImage'
+  pod 'SDWebImage'
 
 end
 

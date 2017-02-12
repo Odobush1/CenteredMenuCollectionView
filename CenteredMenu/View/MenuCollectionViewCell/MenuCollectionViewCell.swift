@@ -1,61 +1,50 @@
-//
-//  MenuCollectionViewCell.swift
-//  ODCenteredMenu
-//
-//  Created by Alex on 1/17/16.
-//  Copyright © 2016 Alex. All rights reserved.
-//
-
-import UIKit
 import SDWebImage
 
 final class MenuCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "menuCollectionViewCell"
+    static let identifier = "menuCollectionViewCell"
     static let nib = UINib(nibName: "MenuCollectionViewCell", bundle: nil)
     
-    @IBOutlet private weak var imageView: UIImageView?
-    @IBOutlet private weak var label: UILabel?
+    @IBOutlet fileprivate weak var imageView: UIImageView!
+    @IBOutlet fileprivate weak var label: UILabel!
     
-    var infoObject: InfoObject? {
+    var viewData: ViewData? {
         didSet {
-            guard let info = infoObject else {
-                return
-            }
-            updateUIWithInfoObject(info)
+            guard let data = viewData else { return }
+            updateUI(withViewData: data)
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView?.image = nil
-        label?.text = nil
+        imageView.image = nil
+        label.text = nil
     }
 }
 
 private extension MenuCollectionViewCell {
-    func updateUIWithInfoObject(infoObject: InfoObject) {
-        label?.text = infoObject.text
+    func updateUI(withViewData viewData: ViewData) {
+        label.text = viewData.text
         
-        if let textColor = infoObject.cellTextColor {
-            label?.textColor = textColor
+        if let textColor = viewData.cellTextColor {
+            label.textColor = textColor
         }
         
-        if let font = infoObject.cellFont {
-            label?.font = font
+        if let font = viewData.cellFont {
+            label.font = font
         }
         
-        if let imageName = infoObject.imageName {
-            imageView?.image = UIImage.init(named: imageName)
+        if let imageName = viewData.imageName {
+            imageView.image = UIImage(named: imageName)
             return
         }
         
-        guard let imageURLString = infoObject.imageURLString else {
-            return
-        }
+        guard let imageURLString = viewData.imageURLString else { return }
+        
         var placeholder: UIImage?
-        if let placeholderName = infoObject.imagePlaceholderName {
-            placeholder = UIImage.init(named: placeholderName)
+        if let placeholderName = viewData.imagePlaceholderName {
+            placeholder = UIImage(named: placeholderName)
         }
-        imageView?.sd_setImageWithURL(NSURL(string: imageURLString), placeholderImage: placeholder)
+        let url = URL(string: imageURLString)
+        imageView.sd_setImage(with: url, placeholderImage: placeholder)
     }
 }

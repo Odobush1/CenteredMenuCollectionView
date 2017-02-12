@@ -1,91 +1,70 @@
-//
-//  HomeViewController.swift
-//  ODCenteredMenu
-//
-//  Created by Alex on 1/23/16.
-//  Copyright © 2016 Alex. All rights reserved.
-//
-
 import UIKit
 
 final class HomeViewController: UIViewController {
-
-    let MaximumNumberOfCells = 22
-    let cellsNamesArray = ["Alabonneheure", "Bagelstein", "Bicoop", "Biocbon", "Buffalo", "Chipotle", "Clement", "CocciMarket", "Cojean", "Columbus", "Costacoffee", "Elrancho", "ExKi", "FactoryAndCo", "Flunch", "GrandFrais", "Haagendazs", "Hippopotamus", "Huithuit", "Illy", "KFC", "LamieCaline", "Сaissedepargne"]
+    @IBOutlet fileprivate weak var cellsCountLabel: UILabel!
+    @IBOutlet fileprivate weak var selectedCellTextLabel: UILabel!
+    @IBOutlet fileprivate weak var selectedCellImageView: UIImageView!
     
-    @IBOutlet private weak var cellsCountLabel: UILabel?
-    @IBOutlet private weak var selectedCellTextLabel: UILabel?
-    @IBOutlet private weak var selectedCellImageView: UIImageView?
+    var dataSourceArray = [ViewData]()
     
-    var dataSourceArray : [InfoObject] = []
-    lazy private var menuViewController: MenuViewController? = {
+    lazy fileprivate var menuViewController: MenuViewController? = {
         return self.createMenuViewControleer()
     }()
     
+    //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addInfoObject()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-}
-
-//MARK: IBActions
-private extension HomeViewController {
-    @IBAction func removeCellButtonPressed(sender: UIButton) {
-        if dataSourceArray.count <= 1 {
-            return
-        }
+    
+    //MARK: IBActions
+    @IBAction func removeCellButtonPressed(_ sender: UIButton) {
+        if dataSourceArray.count <= 1 { return }
         dataSourceArray.removeLast()
-        cellsCountLabel?.text = "\(dataSourceArray.count)"
+        cellsCountLabel.text = "\(dataSourceArray.count)"
     }
     
-    @IBAction func addCellButtonPressed(sender: UIButton) {
-        if dataSourceArray.count >= MaximumNumberOfCells {
-            return
-        }
+    @IBAction func addCellButtonPressed(_ sender: UIButton) {
+        if dataSourceArray.count >= Constants.maximumNumberOfCells { return }
         addInfoObject()
     }
     
-    @IBAction func showMenuButtonPressed(sender: UIButton) {
-        guard let viewController = menuViewController else {
-            return
-        }
+    @IBAction func showMenuButtonPressed(_ sender: UIButton) {
+        guard let viewController = menuViewController else { return }
         viewController.dataSourceArray = dataSourceArray
-        presentViewController(viewController, animated: true, completion: nil)
+        present(viewController, animated: true, completion: nil)
     }
     
-    func addInfoObject() {
-        let cellName = cellsNamesArray[dataSourceArray.count]
-        let infoObject = InfoObject.init(objectNumber: cellsNamesArray.count, objectText: cellName, objectImageName: cellName)
-        dataSourceArray.append(infoObject)
-        cellsCountLabel?.text = "\(dataSourceArray.count)"
+    //MARK: Methods
+    private func addInfoObject() {
+        let cellName = Constants.cellsNamesArray[dataSourceArray.count]
+        let viewData = ViewData(number: Constants.cellsNamesArray.count, text: cellName, imageName: cellName)
+        dataSourceArray.append(viewData)
+        cellsCountLabel.text = "\(dataSourceArray.count)"
     }
-}
-
-private extension HomeViewController {
-    func createMenuViewControleer() -> MenuViewController {
-        let menuViewController = MenuViewController.init()
-        menuViewController.dataSourceArray = dataSourceArray
-        menuViewController.cellTextColor = .darkGrayColor()
-        menuViewController.backgroundImage = UIImage.init(named: "Background")
+    
+    private func createMenuViewControleer() -> MenuViewController {
+        let controller = MenuViewController()
+        controller.dataSourceArray = dataSourceArray
+        controller.cellTextColor = .darkGray
+        controller.backgroundImage = UIImage(named: "Background")
         
-        menuViewController.complitionHandler = { infoObject in
-            self.selectedCellTextLabel?.text = infoObject.text
+        controller.complitionHandler = { [weak self] viewData in
+            self?.selectedCellTextLabel.text = viewData.text
             
-            if let unwrappedImageName = infoObject.imageName {
-                self.selectedCellImageView?.image = UIImage.init(named: unwrappedImageName)
-            } else if let unwrappedImageURLName = infoObject.imageURLString {
-                if let placeholderName = infoObject.imagePlaceholderName {
-                    let placeholder = UIImage.init(named: placeholderName)
-                    self.selectedCellImageView?.sd_setImageWithURL(NSURL(string: unwrappedImageURLName), placeholderImage: placeholder)
+            if let unwrappedImageName = viewData.imageName {
+                self?.selectedCellImageView.image = UIImage(named: unwrappedImageName)
+            } else if let unwrappedImageURLName = viewData.imageURLString {
+                guard let placeholderName = viewData.imagePlaceholderName else {
+                    let url = URL(string: unwrappedImageURLName)
+                    self?.selectedCellImageView.sd_setImage(with: url)
                     return
                 }
-                self.selectedCellImageView?.sd_setImageWithURL(NSURL(string:unwrappedImageURLName))
+                let placeholder = UIImage(named: placeholderName)
+                let url = URL(string: unwrappedImageURLName)
+                self?.selectedCellImageView.sd_setImage(with: url, placeholderImage: placeholder)
             }
         }
-        return menuViewController
+        return controller
     }
 }

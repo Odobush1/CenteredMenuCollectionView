@@ -1,114 +1,92 @@
-//
-//  MenuViewController.swift
-//  ODCenteredMenu
-//
-//  Created by Alex on 1/16/16.
-//  Copyright © 2016 Alex. All rights reserved.
-//
-
 import UIKit
 
 final class MenuViewController: UIViewController {
-    let CellsMinimumInteritemSpacing: CGFloat = 8
-    let DefaultCellInset: CGFloat = 5
-    let NumberOfItemsInRow = 4
-    let CellHeight: CGFloat = 74
-    
-    let TapTransition: CGFloat = 0.8
-    let UnTapTransition: CGFloat = 1.3
-    let TapAnimationDuration = 0.3
-    
-    var dataSourceArray: [InfoObject] = []
-    var showAnimation: Bool = true
+    var dataSourceArray = [ViewData]()
+    var shouldShowAnimation = true
     var backgroundImage: UIImage?
     var cellTextColor: UIColor?
-    var complitionHandler: ((infoObject: InfoObject) -> ())?
+    var complitionHandler: ((_ viewData: ViewData) -> ())?
     
-    private var collectionView: UICollectionView?
-    private var cellWidth: CGFloat = 0
-    private var firstTimeShow = true
+    fileprivate var collectionView: UICollectionView!
+    fileprivate var cellWidth: CGFloat = 0
+    fileprivate var isFirstAppearance = true
     
+    // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         createCollectionView()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        if firstTimeShow == true {
-            firstTimeShow = false
+        if isFirstAppearance {
+            isFirstAppearance = false
             return
         }
         
-        showAnimation = true
+        shouldShowAnimation = true
         collectionView?.reloadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        showAnimation = false
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        shouldShowAnimation = false
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let insertWidth = CGRectGetWidth(collectionView!.bounds) - (DefaultCellInset * 2)
-        let summuryCellsWidth = insertWidth - CellsMinimumInteritemSpacing * (CGFloat(NumberOfItemsInRow) - 1)
-        cellWidth = summuryCellsWidth / CGFloat(NumberOfItemsInRow)
+        guard let width = collectionView?.bounds.width else { return }
+        let insertWidth = width - (Constants.defaultCellInset * 2)
+        let summuryCellsWidth = insertWidth - Constants.cellsMinimumInteritemSpacing * (CGFloat(Constants.numberOfItemsInRow) - 1)
+        cellWidth = summuryCellsWidth / CGFloat(Constants.numberOfItemsInRow)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    
-    func dismissMenuViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-}
-
-//UI update
-private extension MenuViewController {
-    func createCollectionView() {
-        let layout = UICollectionViewFlowLayout.init()
-        layout.minimumInteritemSpacing = CellsMinimumInteritemSpacing
-        collectionView = UICollectionView.init(frame: UIScreen.mainScreen().bounds, collectionViewLayout: layout)
+    //MARK: UI update
+    private func createCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing =  Constants.cellsMinimumInteritemSpacing
+        collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        view.addSubview(collectionView)
+        let viewsDictionary = ["view" : collectionView]
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: viewsDictionary))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: viewsDictionary))
         
-        self.view.addSubview(collectionView!)
-        let viewsDictionary = ["view" : collectionView!]
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: viewsDictionary))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: viewsDictionary))
+        collectionView.register(MenuCollectionViewCell.nib, forCellWithReuseIdentifier: MenuCollectionViewCell.identifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
-        collectionView?.registerNib(MenuCollectionViewCell.nib, forCellWithReuseIdentifier: MenuCollectionViewCell.reuseIdentifier)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        
-        let backgroundView = UIImageView.init(frame: (collectionView?.bounds)!)
-        backgroundView.userInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer.init(target: self, action: Selector("dismissMenuViewController"))
+        let backgroundView = UIImageView(frame: collectionView.bounds)
+        backgroundView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissAnimated))
         backgroundView.addGestureRecognizer(tapGesture)
-        collectionView?.backgroundView = backgroundView
+        collectionView.backgroundView = backgroundView
         
         guard let image = backgroundImage else {
-            backgroundView.backgroundColor = .whiteColor()
+            backgroundView.backgroundColor = .white
             return
         }
         backgroundView.image = image
     }
+
+    func dismissAnimated() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
+//MARK: UICollectionViewDataSource
 extension MenuViewController: UICollectionViewDataSource {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSourceArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(MenuCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? MenuCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCollectionViewCell.identifier, for: indexPath) as? MenuCollectionViewCell else {
             return MenuCollectionViewCell()
         }
-        cell.infoObject = dataSourceArray[indexPath.item]
+        cell.viewData = dataSourceArray[indexPath.item]
         
-        if showAnimation {
+        if shouldShowAnimation {
             cell.performCellAnimation()
         }
         
@@ -116,73 +94,65 @@ extension MenuViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: UICollectionViewDelegate
 extension MenuViewController: UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MenuCollectionViewCell else {
-            return false
-        }
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MenuCollectionViewCell else { return false }
         
-        UIView.animateWithDuration(TapAnimationDuration) { _ in
-            cell.transform = CGAffineTransformMakeScale(self.TapTransition, self.TapTransition)
-        }
+        UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
+            cell.transform = CGAffineTransform(scaleX: Constants.highlightScaleFactor, y: Constants.highlightScaleFactor)
+        }) 
         
         return true
     }
     
-    func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MenuCollectionViewCell else {
-            return
-        }
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MenuCollectionViewCell else { return }
         
-        UIView.animateWithDuration(TapAnimationDuration) { _ in
-            cell.transform = CGAffineTransformIdentity
-        }
+        UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
+            cell.transform = CGAffineTransform.identity
+        }) 
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MenuCollectionViewCell else {
-            return
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MenuCollectionViewCell else { return }
        
-        UIView.animateWithDuration(TapAnimationDuration, animations: { _ in
-            cell.transform = CGAffineTransformMakeScale(self.TapTransition, self.TapTransition)
-            }) { (Bool) -> () in
-                UIView.animateWithDuration(self.TapAnimationDuration, animations: { _ in
-                    cell.transform = CGAffineTransformIdentity
-                    }, completion: { (Bool) -> () in
-                        self.performSelector("dismissMenuViewController", withObject: nil, afterDelay: self.TapAnimationDuration)
-                        guard let complition = self.complitionHandler else {
-                            return
-                        }
-                        complition(infoObject: self.dataSourceArray[indexPath.item])
-                })
-        }
+        UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
+            cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }, completion: { (Bool) -> () in
+            UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
+                cell.transform = CGAffineTransform.identity
+            }, completion: { [weak self] (Bool) -> () in
+                self?.perform(#selector(self?.dismissAnimated), with: nil, afterDelay: Constants.tapAnimationDuration)
+                guard let complition = self?.complitionHandler, let dataSourceArray = self?.dataSourceArray else { return }
+                complition(dataSourceArray[indexPath.item])
+            })
+        })
     }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MenuCollectionViewCell else {
-            return
-        }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MenuCollectionViewCell else { return }
         
-        UIView.animateWithDuration(TapAnimationDuration) { _ in
-            cell.transform = CGAffineTransformIdentity
-        }
+        UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
+            cell.transform = CGAffineTransform.identity
+        }) 
     }
 }
 
+//MARK: UICollectionViewDelegateFlowLayout
 extension MenuViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(cellWidth, CellHeight)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: cellWidth, height:  Constants.cellHeight)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let numberOfItems = collectionView.numberOfItemsInSection(0)
-        let numberOfFullRows = numberOfItems / NumberOfItemsInRow
-        let rowsCount = numberOfItems % NumberOfItemsInRow != 0 ? numberOfFullRows + 1 : numberOfFullRows
-        let totalHeight = CGFloat(rowsCount) * CellHeight + CGFloat(rowsCount - 1) * CellsMinimumInteritemSpacing
-        let topInset = (CGRectGetHeight(collectionView.bounds) - totalHeight) / 2
-        let finalTopInset = topInset > DefaultCellInset ? topInset : DefaultCellInset
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let numberOfItems = collectionView.numberOfItems(inSection: 0)
+        let numberOfFullRows = numberOfItems / Constants.numberOfItemsInRow
+        let rowsCount = numberOfItems %  Constants.numberOfItemsInRow != 0 ? numberOfFullRows + 1 : numberOfFullRows
+        let totalHeight = CGFloat(rowsCount) * Constants.cellHeight + CGFloat(rowsCount - 1) * Constants.cellsMinimumInteritemSpacing
+        let topInset = (collectionView.bounds.height - totalHeight) / 2
+        let finalTopInset = topInset > Constants.defaultCellInset ? topInset : Constants.defaultCellInset
         
-        return UIEdgeInsetsMake(finalTopInset, DefaultCellInset, 0, DefaultCellInset)
+        return UIEdgeInsetsMake(finalTopInset, Constants.defaultCellInset, 0, Constants.defaultCellInset)
     }
 }

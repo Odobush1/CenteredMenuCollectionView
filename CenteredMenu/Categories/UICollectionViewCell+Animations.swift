@@ -1,45 +1,35 @@
-//
-//  UICollectionViewCell+Animations.swift
-//  ODCenteredMenu
-//
-//  Created by Alex on 1/23/16.
-//  Copyright © 2016 Alex. All rights reserved.
-//
-
-import Foundation
 import UIKit
-
-let BoundsDeviation: Int32 = 100
-let CellAnimationDuration = 1.0
-let CellAnimationDelay = 0.0
-let CellAnimationDamping: CGFloat = 0.7
-let CellAnimationVelocity: CGFloat = 0.1
 
 extension UICollectionViewCell {
     func performCellAnimation() {
-        let startPoint = getRangomPoint()
-        self.transform = CGAffineTransformMakeTranslation(startPoint.x, startPoint.y)
-        self.alpha = 0.0
+        let startPoint = rangomPoint()
+        transform = CGAffineTransform(translationX: startPoint.x, y: startPoint.y)
+        alpha = 0
         
-        UIView.animateWithDuration(CellAnimationDuration, delay: CellAnimationDelay, usingSpringWithDamping: CellAnimationDamping, initialSpringVelocity: CellAnimationVelocity, options: [.CurveEaseInOut, .BeginFromCurrentState], animations: { _ in
-                self.transform = CGAffineTransformIdentity
-                self.alpha = 1.0
-            }, completion: nil)
+        UIView.animate(withDuration: Constants.cellAnimationDuration,
+                       delay: Constants.cellAnimationDelay,
+                       usingSpringWithDamping: Constants.cellAnimationDamping,
+                       initialSpringVelocity: Constants.cellAnimationVelocity,
+                       options: .curveEaseInOut,
+                       animations: { [weak self] _ in
+                        self?.transform = CGAffineTransform.identity
+                        self?.alpha = 1
+        })
     }
     
-    func getRangomPoint() -> CGPoint {
-        let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
-        let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+    private func rangomPoint() -> CGPoint {
+        let bounds = UIScreen.main.bounds
+        let screenWidth = UInt32(bounds.width)
+        let screenHeight = UInt32(bounds.height)
         
-        let randomY = rand() % Int32(Int(screenHeight) + BoundsDeviation)
+        let randomY = arc4random_uniform(screenHeight) + UInt32(Constants.boundsDeviation)
         
-        var randomX: Int32
-        if randomY >= Int32(screenHeight) {
-            randomX = rand() % Int32(screenWidth)
-            return CGPointMake(CGFloat(randomX), CGFloat(randomY))
+        if randomY >= screenHeight {
+            let randomX = arc4random_uniform(screenWidth)
+            return CGPoint(x: CGFloat(randomX), y: CGFloat(randomY))
         }
         
-        randomX = rand() % 2 == 1 ? (Int32(screenWidth) + BoundsDeviation) : -BoundsDeviation
-        return CGPointMake(CGFloat(randomX), CGFloat(randomY))
+        let randomX = arc4random_uniform(2) == 1 ? Int32(screenWidth) + Constants.boundsDeviation : -Constants.boundsDeviation
+        return CGPoint(x: CGFloat(randomX), y: CGFloat(randomY))
     }
 }
