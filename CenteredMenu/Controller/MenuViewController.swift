@@ -119,10 +119,10 @@ extension MenuViewController: UICollectionViewDelegate {
        
         UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
             cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        }, completion: { (Bool) -> () in
+        }, completion: { _ in
             UIView.animate(withDuration: Constants.tapAnimationDuration, animations: { _ in
                 cell.transform = CGAffineTransform.identity
-            }, completion: { [weak self] (Bool) -> () in
+            }, completion: { [weak self] _ in
                 self?.perform(#selector(self?.dismissAnimated), with: nil, afterDelay: Constants.tapAnimationDuration)
                 guard let complition = self?.complitionHandler, let dataSourceArray = self?.dataSourceArray else { return }
                 complition(dataSourceArray[indexPath.item])

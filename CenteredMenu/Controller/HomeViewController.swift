@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        addInfoObject()
+        addViewData()
     }
     
     //MARK: IBActions
@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
     
     @IBAction func addCellButtonPressed(_ sender: UIButton) {
         if dataSourceArray.count >= Constants.maximumNumberOfCells { return }
-        addInfoObject()
+        addViewData()
     }
     
     @IBAction func showMenuButtonPressed(_ sender: UIButton) {
@@ -36,7 +36,7 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: Methods
-    private func addInfoObject() {
+    private func addViewData() {
         let cellName = Constants.cellsNamesArray[dataSourceArray.count]
         let viewData = ViewData(number: Constants.cellsNamesArray.count, text: cellName, imageName: cellName)
         dataSourceArray.append(viewData)

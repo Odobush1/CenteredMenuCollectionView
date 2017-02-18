@@ -2,7 +2,7 @@ import UIKit
 
 extension UICollectionViewCell {
     func performCellAnimation() {
-        let startPoint = rangomPoint()
+        let startPoint = randomPoint()
         transform = CGAffineTransform(translationX: startPoint.x, y: startPoint.y)
         alpha = 0
         
@@ -17,7 +17,7 @@ extension UICollectionViewCell {
         })
     }
     
-    private func rangomPoint() -> CGPoint {
+    private func randomPoint() -> CGPoint {
         let bounds = UIScreen.main.bounds
         let screenWidth = UInt32(bounds.width)
         let screenHeight = UInt32(bounds.height)
